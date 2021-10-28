@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Type;
+
+use App\Company;
+
 use Illuminate\Http\Request;
 
 class TypeController extends Controller
@@ -14,7 +17,8 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        $types = Type::all();
+        return view("type.index", ["types" => $types]);
     }
 
     /**
@@ -24,7 +28,8 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+        $companies = Company::all();
+        return view("type.create", ["companies" => $companies]);
     }
 
     /**
@@ -35,7 +40,17 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $type = new Type;
+
+        $type->title = $request->type_title;
+        $type->description = $request->type_description;
+        $type-> company_id = $request->type_info;
+
+        $type->save();
+
+        return redirect()->route("type.index");
+
+
     }
 
     /**
@@ -46,7 +61,7 @@ class TypeController extends Controller
      */
     public function show(Type $type)
     {
-        //
+        return view("type.show", ["type" => $type]);
     }
 
     /**
@@ -57,7 +72,8 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        //
+        $companies = Company::all();
+        return view("type.edit", ["type" => $type, "companies"=>$companies]);
     }
 
     /**
@@ -69,7 +85,13 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        //
+        $type->title = $request->type_title;
+        $type->description = $request->type_description;
+        $type-> company_id = $request->type_info;
+
+        $type->save();
+
+        return redirect()->route("type.index");
     }
 
     /**
@@ -80,6 +102,8 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        //
+
+        $type->delete();
+        return redirect()->route("type.index")->with('success_message','Istrinta sekmingai');
     }
 }

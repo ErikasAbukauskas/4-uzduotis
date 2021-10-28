@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use App\Type;
+
 class TypeSeeder extends Seeder
 {
     /**
@@ -11,6 +13,6 @@ class TypeSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(Type::class, 50)->create();
     }
 }
